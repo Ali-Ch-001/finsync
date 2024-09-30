@@ -57,8 +57,8 @@ const MobileNav = ({ user }: MobileNavProps) => {
                         <Image 
                           src={item.imgURL}
                           alt={item.label}
-                          width={20}
-                          height={20}
+                          width={25}
+                          height={25}
                           className={cn({
                             'brightness-[3] invert-0': isActive
                           })}
@@ -72,11 +72,13 @@ const MobileNav = ({ user }: MobileNavProps) => {
                 )
               })}
               < PlaidLink user={user} /> 
+              <Footer user={user} type="mobile"/>
             
               </nav>
+              
             </SheetClose>
 
-            <Footer user={user} type="mobile" />
+            
           </div>
         </SheetContent>
       </Sheet>
