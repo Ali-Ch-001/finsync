@@ -19,6 +19,11 @@ export const sidebarLinks = [
     route: "/payment-transfer",
     label: "Transfer Funds",
   },
+  {
+    imgURL: "https://img.icons8.com/ios-filled/50/000000/spin-wheel.png", // Online icon from Icons8
+    route: "/spin-wheel",
+    label: "Spin Wheel",
+  },
 ];
 
 // good_user / good_password - Bank of America
