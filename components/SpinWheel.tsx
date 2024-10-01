@@ -146,7 +146,7 @@ const SpinWheel = () => {
           className="bg-blue-500 text-white p-2 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300"
         >
           <div>
-            <Image src={"/icons/copy.svg"} alt="Copy Icon" width={24} height={24} />
+            <Image src={"/icons/copy.svg"} alt="Copy Icon" width={24} height={24}/>
           </div>
           
         </button>
