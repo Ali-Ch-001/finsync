@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Chart } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import Image from "next/image";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -127,7 +128,8 @@ export default function SpinCircle() {
       {winnerIndex !== null && winnerIndex >= 0 && winnerIndex < datasetValues.length && showPopup && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-xl z-50 text-center w-[300px] md:w-[400px]">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            🎉 {datasetValues[winnerIndex].label} Won!
+            🎉 You Won! 
+            A {datasetValues[winnerIndex].label} Coupon
           </h3>
           <p className="text-lg text-gray-700 mb-2">
             {datasetValues[winnerIndex].details}
@@ -136,37 +138,28 @@ export default function SpinCircle() {
             Expiry: {datasetValues[winnerIndex].expiry}
           </p>
           <div className="flex items-center justify-center mb-4">
-            <p className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mr-2">
-              {datasetValues[winnerIndex].code}
-            </p>
-            <button
-              onClick={() => handleCopy(datasetValues[winnerIndex].code)}
-              className="bg-blue-500 text-white p-2 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 16h8m2 0a2 2 0 100-4h-8a2 2 0 100 4zm0 4H8m2 0a2 2 0 100-4h-8a2 2 0 100 4z"
-                />
-              </svg>
-            </button>
+          <p className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg mr-2">
+  {datasetValues[winnerIndex].code}
+        </p>
+        <button
+          onClick={() => handleCopy(datasetValues[winnerIndex].code)}
+          className="bg-blue-500 text-white p-2 rounded-full shadow-lg hover:bg-blue-600 transition-all duration-300"
+        >
+          <div>
+            <Image src={"/icons/copy.svg"} alt="Copy Icon" width={24} height={24} />
           </div>
-          <button
-            onClick={() => setShowPopup(false)}
-            className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300"
-          >
-            Close
-          </button>
+          
+        </button>
+</div>
+<button
+  onClick={() => setShowPopup(false)}
+  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300"
+>
+  Close
+</button>
         </div>
       )}
     </div>
   );
 }
+

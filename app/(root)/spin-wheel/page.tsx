@@ -1,13 +1,20 @@
-import SpinWheel from '@/components/SpinWheel'; // Import your SpinWheel component
+import HeaderBox from '@/components/HeaderBox';
+import SpinWheel from '@/components/SpinWheel';
+import React from 'react';
 
 const SpinWheelPage = () => {
   return (
-    <div className="spin-wheel-page flex flex-col items-center justify-center h-screen bg-gray-50">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800"><br></br><br></br>Spin the Wheel & Win!</h1>
-      <SpinWheel />
-    </div>
+    <section className="spin-wheel-page">
+      <HeaderBox 
+        title="Spin the Wheel & Win!"
+        subtext="Try your luck and see what you win!"
+      />
+
+      <section className="spin-wheel">
+        <SpinWheel />
+      </section>
+    </section>
   );
 };
 
 export default SpinWheelPage;
-
