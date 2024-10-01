@@ -17,7 +17,7 @@ const datasetValues = [
   { value: 1, color: "#854CFF", label: "Daraz", details: "10% off on all products", expiry: "28/02/2025", code: "DZ678" },
 ];
 
-export default function SpinCircle() {
+const SpinWheel = () => {
   // State variables to manage spinning, countdowns, and results
   const [spinning, setSpinning] = useState(false);
   const [rotationAngle, setRotationAngle] = useState(0);
@@ -163,3 +163,4 @@ export default function SpinCircle() {
   );
 }
 
+export default SpinWheel;
