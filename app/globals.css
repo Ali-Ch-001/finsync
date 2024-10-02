@@ -384,22 +384,16 @@
 }
 
  /* spin */
-.spin-wheel-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #f9fafb; /* Light gray background */
+ .spin-wheel-page {
+  @apply flex flex-col min-h-screen bg-gray-100;
 }
 
 .spin-wheel-page header {
-  display: flex;
-  width: 100%;
-  max-width: 1200px;
+  @apply flex w-full max-w-screen-xl;
 }
 
 .spin-wheel-page .size-full {
-  width: 100%;
-  max-width: 1200px;
+  @apply w-full max-w-screen-xl;
 }
 
 .spin-wheel {
