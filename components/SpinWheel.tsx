@@ -75,7 +75,7 @@ const SpinWheel = () => {
       {/* Spin Button */}
       <button
         onClick={handleSpin}
-        className={`mt-10 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg font-bold text-lg transition-all duration-300 hover:bg-blue-600 ${
+        className={`sm:mt-2 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg font-bold text-lg transition-all duration-300 hover:bg-blue-600 ${
           spinning ? "cursor-not-allowed opacity-50" : ""
         }`}
         disabled={spinning}
@@ -84,7 +84,7 @@ const SpinWheel = () => {
       </button>
 
       {/* Spin Circle (Doughnut Chart) */}
-      <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mt-10">
+      <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mt-4 md:mt-10">
         <div
           className={`transition-transform duration-[${spinning ? '10s' : '0s'}] ease-out`}
           style={{

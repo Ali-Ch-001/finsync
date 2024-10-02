@@ -379,7 +379,6 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: #f9fafb; /* Light gray background */
-  padding: 2rem; /* Padding around the content */
 }
 
 .spin-wheel-page header {
