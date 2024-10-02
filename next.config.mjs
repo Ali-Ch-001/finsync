@@ -1,13 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true
-  },
-  images: {
-    domains: ['img.icons8.com'], // Add img.icons8.com to the allowed domains
+    ignoreDuringBuilds: true,
   },
 };
 
