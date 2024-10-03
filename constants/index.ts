@@ -26,6 +26,40 @@ export const sidebarLinks = [
   },
 ];
 
+export const socialIcons = [
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com",
+    icon: "/icons/facebook.svg",
+    position: { top: "40%", left: "8%" }, // Fixed positions
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com",
+    icon: "/icons/instagram.svg",
+    position: { top: "25%", left: "83%" },
+  },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com",
+    icon: "/icons/linkedin.svg",
+    position: { top: "93%", left: "55%" },
+  },
+  {
+    name: "GitHub",
+    url: "https://www.github.com",
+    icon: "/icons/github.svg",
+    position: { top: "70%", left: "83%" },
+  },
+  {
+    name: "Twitter",
+    url: "https://www.twitter.com",
+    icon: "/icons/twitter.svg",
+    position: { top: "90%", left: "20%" },
+  },
+];
+
+
 
 export const topCategoryStyles = {
   "Food and Drink": {

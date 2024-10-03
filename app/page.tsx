@@ -1,11 +1,11 @@
 "use client";
 
 import { Tabs } from "@/components/ui/tabs-section";
-import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion"; // Import framer-motion for animations
+import { socialIcons } from "@/constants";
 
-const TabsDemo = () => {
+const AllTabs = () => {
   const tabs = [
     {
       title: "Overview",
@@ -86,38 +86,7 @@ const TabsDemo = () => {
     },
   ];
 
-  const socialIcons = [
-    {
-      name: "Facebook",
-      url: "https://www.facebook.com",
-      icon: "/icons/facebook.svg",
-      position: { top: "40%", left: "5%" }, // Fixed positions
-    },
-    {
-      name: "Instagram",
-      url: "https://www.instagram.com",
-      icon: "/icons/instagram.svg",
-      position: { top: "25%", left: "83%" },
-    },
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com",
-      icon: "/icons/linkedin.svg",
-      position: { top: "93%", left: "45%" },
-    },
-    {
-      name: "GitHub",
-      url: "https://www.github.com",
-      icon: "/icons/github.svg",
-      position: { top: "70%", left: "75%" },
-    },
-    {
-      name: "Twitter",
-      url: "https://www.twitter.com",
-      icon: "/icons/twitter.svg",
-      position: { top: "80%", left: "20%" },
-    },
-  ];
+
 
    return (
     <div className="relative flex flex-col items-center justify-start h-auto sm:h-[40rem] w-full px-4 sm:px-0 pt-6 sm:pt-0">
@@ -189,4 +158,4 @@ const TabsDemo = () => {
   );
 };
 
-export default TabsDemo;
+export default AllTabs;
