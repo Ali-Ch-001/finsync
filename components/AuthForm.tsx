@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -29,58 +30,81 @@ const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const loggedInUser = await getLoggedInUser();
+      if (loggedInUser) {
+        router.push('/home');
+        setSuccessMessage('Session Exists Sign-In Successful! Redirecting ....');
+      }
+    };
+
+    checkUserSession();
+  }, [router]);
 
   const formSchema = authFormSchema(type);
 
-    // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        email: "",
-        password: ''
-      },
-    })
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: ''
+    },
+  })
    
-    // 2. Define a submit handler.
-    const onSubmit = async (data: z.infer<typeof formSchema>) => {
-      setIsLoading(true);
+  // 2. Define a submit handler.
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
 
-      try {
-        // Sign up with Appwrite & create plaid token
-        
-        if(type === 'sign-up') {
-          const userData = {
-            firstName: data.firstName!,
-            lastName: data.lastName!,
-            address1: data.address1!,
-            city: data.city!,
-            state: data.state!,
-            postalCode: data.postalCode!,
-            dateOfBirth: data.dateOfBirth!,
-            ssn: data.ssn!,
-            email: data.email,
-            password: data.password
-          }
-
-          const newUser = await signUp(userData);
-
-          setUser(newUser);
+    try {
+      // Sign up with Appwrite & create plaid token
+      if(type === 'sign-up') {
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password
         }
 
-        if(type === 'sign-in') {
-          const response = await signIn({
-            email: data.email,
-            password: data.password,
-          })
-
-          if(response) router.push('/home')
-        }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
+        const newUser = await signUp(userData);
+        setUser(newUser);
       }
+
+      if(type === 'sign-in') {
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        })
+
+        if(response) {
+          setSuccessMessage('Sign-In Successful! Redirecting ....');   
+            router.push('/home');
+        } else {
+          setErrorMessage('Invalid Username or Password.');
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error && (error as any).code === 401 && (error as any).type === 'user_invalid_credentials') {
+        setErrorMessage('Invalid Username or Password.');
+      } else {
+        console.log(error);
+      }
+    } finally {
+      setIsLoading(false);
     }
+  }
 
   return (
     <section className="auth-form">
@@ -142,6 +166,18 @@ const AuthForm = ({ type }: { type: string }) => {
               <CustomInput control={form.control} name='email' label="Email" placeholder='Enter your email' />
 
               <CustomInput control={form.control} name='password' label="Password" placeholder='Enter your password' />
+
+              {errorMessage && (
+                <div className="error-message text-red-500">
+                  {errorMessage}
+                </div>
+              )}
+
+              {successMessage && (
+                <div className="success-message text-green-500">
+                  {successMessage}
+                </div>
+              )}
 
               <div className="flex flex-col gap-4">
                 <Button type="submit" disabled={isLoading} className="form-btn">
