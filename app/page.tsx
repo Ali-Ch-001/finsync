@@ -265,7 +265,7 @@ const AllTabs = () => {
         </motion.div>
       )}
 
-      {/* Popup for Mobile */}
+      {/* Popup for Mobile With Touch*/}
       {isMobile && showPopup && popupData && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
