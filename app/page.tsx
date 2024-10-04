@@ -4,6 +4,20 @@ import { Tabs } from "@/components/ui/tabs-section";
 import Image from "next/image";
 import { motion } from "framer-motion"; // Import framer-motion for animations
 import { socialIcons } from "@/constants";
+import { useState, useEffect } from "react";
+
+// Define a type for the users' data
+type User = {
+  name: string;
+  image: string;
+  link: string;
+};
+
+type PopupData = {
+  users: User[];
+  iconName: string;
+};
+
 
 const AllTabs = () => {
   const tabs = [
@@ -86,9 +100,92 @@ const AllTabs = () => {
     },
   ];
 
+  const usersData: Record<string, User[]> = {
+    Instagram: [
+      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.instagram.com/kabeeahmad.ka" },
+      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.instagram.com/ali.__.ch_" },
+      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.instagram.com/fatinum._" },
+    ],
+    Facebook: [
+      // Same user data for now, but you can customize later
+      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.facebook.com/kabeerahmad381?mibextid=LQQJ4d" },
+      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.facebook.com/profile.php?id=100037849306022&mibextid=LQQJ4d" },
+      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.facebook.com/profile.php?id=100070665133899" },
+    ],
+    LinkedIn: [
+      // Same user data for now, but you can customize later
+      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.linkedin.com/in/kabeer-ahmad" },
+      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.linkedin.com/in/ali-787-ch" },
+      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.linkedin.com/in/fatima-0ahmad-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
+    ],
+    GitHub: [
+      // Same user data for now, but you can customize later
+      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://github.com/Kabeer-Ahmad" },
+      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://github.com/Ali-Ch-001" },
+      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://github.com/fatimaa-ahmad" },
+    ],
+    Twitter: [
+      // Same user data for now, but you can customize later
+      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "" },
+      { name: "Ali Mohsin", image: "/images/ali.webp", link: "www.x.com/Ali787ch" },
+      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.instagram.com/fatinum._" },
+    ],
+  };
 
+ 
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupData, setPopupData] = useState<PopupData | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
-   return (
+  // Check if the user is on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Define mobile as <= 768px width
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Check on load
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleIconClickMobile = (iconName: keyof typeof usersData) => {
+    // On mobile, open the popup in the center when clicking the icon
+    setPopupData({ users: usersData[iconName], iconName });
+    setShowPopup(true);
+  };
+
+  const handleIconHoverDesktop = (event: any, iconName: keyof typeof usersData) => {
+    // For desktop: Popup near the hovered icon
+    if (!isMobile) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const screenWidth = window.innerWidth;
+      let top = rect.top;
+      let left = rect.left + rect.width + 10; // Default: to the right of the icon
+
+      if (screenWidth - rect.right < 150) {
+        left = rect.left - 255;
+      } else if (rect.top < 100) {
+        top = rect.bottom + 10;
+        left = rect.left + rect.width / 2 - 75;
+      }
+
+      setPopupData({ users: usersData[iconName], iconName });
+      setPopupPosition({ top, left });
+      setShowPopup(true);
+    }
+  };
+
+  const handleMouseLeaveDesktop = () => {
+    if (!isMobile) setShowPopup(false);
+  };
+
+  const closePopupMobile = () => {
+    setShowPopup(false);
+  };
+
+  return (
     <div className="relative flex flex-col items-center justify-start h-auto sm:h-[40rem] w-full px-4 sm:px-0 pt-6 sm:pt-0">
       {/* Tabs Section */}
       <Tabs tabs={tabs} />
@@ -96,7 +193,8 @@ const AllTabs = () => {
       {/* Social Media Icons for Desktop */}
       <div className="absolute inset-0 pointer-events-none z-10 hidden sm:block">
         {socialIcons.map((icon, idx) => {
-          const randomRotation = Math.random() * 360; // Generate random initial rotation
+          const randomRotation = Math.random() * 360;
+
           return (
             <motion.a
               href={icon.url}
@@ -108,19 +206,20 @@ const AllTabs = () => {
                 top: icon.position.top,
                 left: icon.position.left,
               }}
-              initial={{ rotate: randomRotation }} // Set the initial random rotation
-              animate={{ rotate: randomRotation }} // Maintain the initial rotation when not hovered
+              initial={{ rotate: randomRotation }}
+              animate={{ rotate: randomRotation }}
               whileHover={{
-                scale: 1.5, // Increase size on hover
-                rotate: randomRotation + (Math.random() * 10 - 5), // Slight random rotation during hover
-                filter: "brightness(1.3)", // Increase glow on hover
+                scale: 1.5,
+                filter: "brightness(1.5)", // Brightness increases on hover
               }}
               transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              onMouseEnter={(event) => handleIconHoverDesktop(event, icon.name as keyof typeof usersData)} // Show popup on hover for desktop
+              onMouseLeave={handleMouseLeaveDesktop} // Close on leave for desktop
             >
               <Image
                 src={icon.icon}
                 alt={icon.name}
-                width={100} // Icon size
+                width={100}
                 height={100}
                 className="drop-shadow-lg hover:drop-shadow-2xl"
               />
@@ -129,15 +228,93 @@ const AllTabs = () => {
         })}
       </div>
 
+      {/* Popup for Desktop With Hover */}
+      {!isMobile && showPopup && popupData && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="absolute p-4 bg-white rounded-lg shadow-lg z-20"
+          style={{
+            top: popupPosition.top,
+            left: popupPosition.left,
+            width: "250px",
+          }}
+          onMouseEnter={() => setShowPopup(true)} // Keep popup visible when hovering (desktop)
+          onMouseLeave={handleMouseLeaveDesktop} // Close when leaving popup (desktop)
+        >
+          {popupData.users.map((user, idx) => (
+            <div
+              key={idx}
+              className="flex items-center space-x-4 mb-2 hover:bg-gray-100 p-2 rounded-md transition-all"
+            >
+              <Image src={user.image} alt={user.name} width={40} height={40} className="rounded-full" />
+              <div>
+                <h3 className="font-bold">{user.name}</h3>
+                <a
+                  href={user.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  View Profile
+                </a>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      )}
+
+      {/* Popup for Mobile With Touch*/}
+      {isMobile && showPopup && popupData && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed p-4 bg-white rounded-lg shadow-lg z-20"
+          style={{
+            top: "55%",
+            left: "0%",
+            transform: "translate(-50%, -50%)",
+            width: "100%",
+            maxWidth: "100%",
+          }}
+        >
+          {popupData.users.map((user, idx) => (
+            <div
+              key={idx}
+              className="flex items-center space-x-4 mb-2 hover:bg-gray-100 p-2 rounded-md transition-all"
+            >
+              <Image src={user.image} alt={user.name} width={40} height={40} className="rounded-full" />
+              <div>
+                <h3 className="font-bold">{user.name}</h3>
+                <a
+                  href={user.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  View Profile
+                </a>
+              </div>
+            </div>
+          ))}
+          <button
+            className="mt-4 bg-blue-500 text-white py-1 px-4 rounded-md"
+            onClick={closePopupMobile}
+          >
+            Close
+          </button>
+        </motion.div>
+      )}
+
       {/* Social Media Icons for Mobile */}
       <div className="fixed bottom-0 flex justify-around items-center bg-white py-3 w-[100%] sm:hidden z-20 overflow-x-hidden">
         {socialIcons.map((icon, idx) => (
           <motion.a
-            href={icon.url}
-            target="_blank"
-            rel="noopener noreferrer"
             key={idx}
             className="pointer-events-auto"
+            onClick={() => handleIconClickMobile(icon.name as keyof typeof usersData)} // Show popup on click for mobile
             whileHover={{
               scale: 1.2,
               filter: "brightness(1.3)",
@@ -147,7 +324,7 @@ const AllTabs = () => {
             <Image
               src={icon.icon}
               alt={icon.name}
-              width={50} // Smaller size for mobile view
+              width={50}
               height={50}
               className="drop-shadow-lg hover:drop-shadow-2xl"
             />
