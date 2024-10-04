@@ -31,7 +31,7 @@ export const socialIcons = [
     name: "Facebook",
     url: "https://www.facebook.com",
     icon: "/icons/facebook.svg",
-    position: { top: "40%", left: "8%" }, // Fixed positions
+    position: { top: "40%", left: "8%" },
   },
   {
     name: "Instagram",
@@ -58,6 +58,43 @@ export const socialIcons = [
     position: { top: "90%", left: "20%" },
   },
 ];
+
+interface User {
+  name: string;
+  image: string;
+  link: string;
+}
+
+export const usersData: Record<string, User[]> = {
+  Instagram: [
+    { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.instagram.com/ali.__.ch_" },
+    { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.instagram.com/kabeeahmad.ka" },
+    { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.instagram.com/fatinum._" },
+  ],
+  Facebook: [
+    
+    { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.facebook.com/kabeerahmad381?mibextid=LQQJ4d" },
+    { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.facebook.com/profile.php?id=100037849306022&mibextid=LQQJ4d" },
+    { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.facebook.com/profile.php?id=100070665133899" },
+  ],
+  LinkedIn: [
+    
+    { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.linkedin.com/in/ali-787-ch" },
+    { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.linkedin.com/in/kabeer-ahmad" },
+    { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.linkedin.com/in/fatima-0ahmad-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
+  ],
+  GitHub: [
+    
+    { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://github.com/Ali-Ch-001" },
+    { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://github.com/Kabeer-Ahmad" },
+    { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://github.com/fatimaa-ahmad" },
+  ],
+  Twitter: [
+    { name: "Ali Mohsin", image: "/images/ali.webp", link: "www.x.com/Ali787ch" },
+    { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "" },
+    { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.instagram.com/fatinum._" },
+  ],
+};
 
 
 

@@ -2,11 +2,11 @@
 
 import { Tabs } from "@/components/ui/tabs-section";
 import Image from "next/image";
-import { motion } from "framer-motion"; // Import framer-motion for animations
-import { socialIcons } from "@/constants";
+import { motion } from "framer-motion";
+import { socialIcons, usersData } from "@/constants";
 import { useState, useEffect } from "react";
 
-// Define a type for the users' data
+
 type User = {
   name: string;
   image: string;
@@ -100,38 +100,6 @@ const AllTabs = () => {
     },
   ];
 
-  const usersData: Record<string, User[]> = {
-    Instagram: [
-      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.instagram.com/kabeeahmad.ka" },
-      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.instagram.com/ali.__.ch_" },
-      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.instagram.com/fatinum._" },
-    ],
-    Facebook: [
-      // Same user data for now, but you can customize later
-      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.facebook.com/kabeerahmad381?mibextid=LQQJ4d" },
-      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.facebook.com/profile.php?id=100037849306022&mibextid=LQQJ4d" },
-      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.facebook.com/profile.php?id=100070665133899" },
-    ],
-    LinkedIn: [
-      // Same user data for now, but you can customize later
-      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://www.linkedin.com/in/kabeer-ahmad" },
-      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://www.linkedin.com/in/ali-787-ch" },
-      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.linkedin.com/in/fatima-0ahmad-?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
-    ],
-    GitHub: [
-      // Same user data for now, but you can customize later
-      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "https://github.com/Kabeer-Ahmad" },
-      { name: "Ali Mohsin", image: "/images/ali.webp", link: "https://github.com/Ali-Ch-001" },
-      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://github.com/fatimaa-ahmad" },
-    ],
-    Twitter: [
-      // Same user data for now, but you can customize later
-      { name: "Kabeer Ahmad", image: "/images/kabeer.webp", link: "" },
-      { name: "Ali Mohsin", image: "/images/ali.webp", link: "www.x.com/Ali787ch" },
-      { name: "Fatima Ahmad", image: "/images/fatima.webp", link: "https://www.instagram.com/fatinum._" },
-    ],
-  };
-
  
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState<PopupData | null>(null);
@@ -156,6 +124,7 @@ const AllTabs = () => {
     setShowPopup(true);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleIconHoverDesktop = (event: any, iconName: keyof typeof usersData) => {
     // For desktop: Popup near the hovered icon
     if (!isMobile) {
@@ -210,11 +179,11 @@ const AllTabs = () => {
               animate={{ rotate: randomRotation }}
               whileHover={{
                 scale: 1.5,
-                filter: "brightness(1.5)", // Brightness increases on hover
+                filter: "brightness(1.5)", 
               }}
               transition={{ type: "spring", stiffness: 200, damping: 10 }}
               onMouseEnter={(event) => handleIconHoverDesktop(event, icon.name as keyof typeof usersData)} // Show popup on hover for desktop
-              onMouseLeave={handleMouseLeaveDesktop} // Close on leave for desktop
+              onMouseLeave={handleMouseLeaveDesktop} 
             >
               <Image
                 src={icon.icon}
