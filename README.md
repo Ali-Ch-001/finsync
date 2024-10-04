@@ -17,6 +17,8 @@ Check out the live application here: [Finsync](https://finsync-delta.vercel.app/
 - **Zod**: A TypeScript-first schema declaration and validation library.
 - **TailwindCSS**: Utility-first CSS framework for rapid UI development.
 - **Chart.js**: Provides interactive charts and data visualization.
+- **Aceternity Ui** Provides Pre Built UI Page Components for Fasting Implementation.
+- **ShadCN** Beautifully designed components that you can deploy into your apps.
 
 ## 🔋 Features
 
