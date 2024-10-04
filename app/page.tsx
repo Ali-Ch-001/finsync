@@ -228,7 +228,7 @@ const AllTabs = () => {
         })}
       </div>
 
-      {/* Popup for Desktop */}
+      {/* Popup for Desktop With Hover */}
       {!isMobile && showPopup && popupData && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
