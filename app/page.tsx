@@ -4,7 +4,20 @@ import { Tabs } from "@/components/ui/tabs-section";
 import Image from "next/image";
 import { motion } from "framer-motion"; // Import framer-motion for animations
 import { socialIcons } from "@/constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Define a type for the users' data
+type User = {
+  name: string;
+  image: string;
+  link: string;
+};
+
+type PopupData = {
+  users: User[];
+  iconName: string;
+};
+
 
 const AllTabs = () => {
   const tabs = [
@@ -123,52 +136,54 @@ const AllTabs = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupData, setPopupData] = useState<PopupData | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
-  // For desktop hover, to show the popup
-  const handleIconHover = (event: MouseEvent<HTMLAnchorElement>, iconName: keyof typeof usersData) => {
+  // Check if the user is on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Define mobile as <= 768px width
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Check on load
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleIconClickMobile = (iconName: keyof typeof usersData) => {
+    // On mobile, open the popup in the center when clicking the icon
+    setPopupData({ users: usersData[iconName], iconName });
+    setShowPopup(true);
+  };
+
+  const handleIconHoverDesktop = (event: any, iconName: keyof typeof usersData) => {
+    // For desktop: Popup near the hovered icon
     if (!isMobile) {
       const rect = event.currentTarget.getBoundingClientRect();
       const screenWidth = window.innerWidth;
       let top = rect.top;
-      let left = rect.left + rect.width + 10;
+      let left = rect.left + rect.width + 10; // Default: to the right of the icon
 
-      // Adjust popup position based on available space
-      if (screenWidth - rect.right < 150) left = rect.left - 255;
-      if (rect.top < 100) {
+      if (screenWidth - rect.right < 150) {
+        left = rect.left - 255;
+      } else if (rect.top < 100) {
         top = rect.bottom + 10;
         left = rect.left + rect.width / 2 - 75;
       }
 
       setPopupData({ users: usersData[iconName], iconName });
+      setPopupPosition({ top, left });
       setShowPopup(true);
     }
   };
 
-  // Mobile click behavior to show a centered popup
-  const handleIconClickMobile = (iconName: keyof typeof usersData) => {
-    if (isMobile) {
-      setPopupData({ users: usersData[iconName], iconName });
-      setShowPopup(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
+  const handleMouseLeaveDesktop = () => {
     if (!isMobile) setShowPopup(false);
   };
 
-  // Detect mobile device
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
+  const closePopupMobile = () => {
+    setShowPopup(false);
   };
-
-  useState(() => {
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check on mount
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <div className="relative flex flex-col items-center justify-start h-auto sm:h-[40rem] w-full px-4 sm:px-0 pt-6 sm:pt-0">
@@ -176,108 +191,44 @@ const AllTabs = () => {
       <Tabs tabs={tabs} />
 
       {/* Social Media Icons for Desktop */}
-      {!isMobile && (
-        <div className="absolute inset-0 pointer-events-none z-10 hidden sm:block">
-          {socialIcons.map((icon, idx) => {
-            const randomRotation = Math.random() * 360;
-            return (
-              <motion.a
-                href={icon.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                key={idx}
-                className="absolute pointer-events-auto"
-                style={{ top: icon.position.top, left: icon.position.left }}
-                initial={{ rotate: randomRotation }}
-                animate={{ rotate: randomRotation }}
-                whileHover={{
-                  scale: 1.5,
-                  filter: "brightness(1.5)",
-                }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                onMouseEnter={(event) => handleIconHover(event, icon.name as keyof typeof usersData)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <Image
-                  src={icon.icon}
-                  alt={icon.name}
-                  width={100}
-                  height={100}
-                  className="drop-shadow-lg hover:drop-shadow-2xl"
-                />
-              </motion.a>
-            );
-          })}
-        </div>
-      )}
+      <div className="absolute inset-0 pointer-events-none z-10 hidden sm:block">
+        {socialIcons.map((icon, idx) => {
+          const randomRotation = Math.random() * 360;
 
-      {/* Social Media Icons for Mobile */}
-      {isMobile && (
-        <div className="fixed bottom-0 flex justify-around items-center bg-white py-3 w-full sm:hidden z-20">
-          {socialIcons.map((icon, idx) => (
+          return (
             <motion.a
+              href={icon.url}
+              target="_blank"
+              rel="noopener noreferrer"
               key={idx}
-              className="pointer-events-auto"
+              className="absolute pointer-events-auto"
+              style={{
+                top: icon.position.top,
+                left: icon.position.left,
+              }}
+              initial={{ rotate: randomRotation }}
+              animate={{ rotate: randomRotation }}
               whileHover={{
-                scale: 1.2,
-                filter: "brightness(1.3)",
+                scale: 1.5,
+                filter: "brightness(1.5)", // Brightness increases on hover
               }}
               transition={{ type: "spring", stiffness: 200, damping: 10 }}
-              onClick={() => handleIconClickMobile(icon.name as keyof typeof usersData)}
+              onMouseEnter={(event) => handleIconHoverDesktop(event, icon.name as keyof typeof usersData)} // Show popup on hover for desktop
+              onMouseLeave={handleMouseLeaveDesktop} // Close on leave for desktop
             >
               <Image
                 src={icon.icon}
                 alt={icon.name}
-                width={50}
-                height={50}
+                width={100}
+                height={100}
                 className="drop-shadow-lg hover:drop-shadow-2xl"
               />
             </motion.a>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
 
-      {/* Popup for mobile devices (Centered Modal) */}
-      {isMobile && showPopup && popupData && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-30 flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="p-4 bg-white rounded-lg shadow-lg z-40 w-[90%] max-w-[400px] mx-auto"
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-            >
-              &times;
-            </button>
-            <h3 className="text-xl font-bold mb-4">Select a Profile</h3>
-            {popupData.users.map((user, idx) => (
-              <div
-                key={idx}
-                className="flex items-center space-x-4 mb-2 hover:bg-gray-100 p-2 rounded-md transition-all"
-              >
-                <Image src={user.image} alt={user.name} width={40} height={40} className="rounded-full" />
-                <div>
-                  <h3 className="font-bold">{user.name}</h3>
-                  <a
-                    href={user.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    View Profile
-                  </a>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      )}
-
-      {/* Popup for showing user info on Desktop */}
+      {/* Popup for Desktop */}
       {!isMobile && showPopup && popupData && (
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -288,10 +239,9 @@ const AllTabs = () => {
             top: popupPosition.top,
             left: popupPosition.left,
             width: "250px",
-            transform: popupPosition.direction === "right" ? "translateX(0)" : "translateX(-100%)",
           }}
-          onMouseEnter={() => setShowPopup(true)}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={() => setShowPopup(true)} // Keep popup visible when hovering (desktop)
+          onMouseLeave={handleMouseLeaveDesktop} // Close when leaving popup (desktop)
         >
           {popupData.users.map((user, idx) => (
             <div
@@ -314,6 +264,73 @@ const AllTabs = () => {
           ))}
         </motion.div>
       )}
+
+      {/* Popup for Mobile */}
+      {isMobile && showPopup && popupData && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed p-4 bg-white rounded-lg shadow-lg z-20"
+          style={{
+            top: "55%",
+            left: "0%",
+            transform: "translate(-50%, -50%)",
+            width: "100%",
+            maxWidth: "100%",
+          }}
+        >
+          {popupData.users.map((user, idx) => (
+            <div
+              key={idx}
+              className="flex items-center space-x-4 mb-2 hover:bg-gray-100 p-2 rounded-md transition-all"
+            >
+              <Image src={user.image} alt={user.name} width={40} height={40} className="rounded-full" />
+              <div>
+                <h3 className="font-bold">{user.name}</h3>
+                <a
+                  href={user.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline"
+                >
+                  View Profile
+                </a>
+              </div>
+            </div>
+          ))}
+          <button
+            className="mt-4 bg-blue-500 text-white py-1 px-4 rounded-md"
+            onClick={closePopupMobile}
+          >
+            Close
+          </button>
+        </motion.div>
+      )}
+
+      {/* Social Media Icons for Mobile */}
+      <div className="fixed bottom-0 flex justify-around items-center bg-white py-3 w-[100%] sm:hidden z-20 overflow-x-hidden">
+        {socialIcons.map((icon, idx) => (
+          <motion.a
+            key={idx}
+            className="pointer-events-auto"
+            onClick={() => handleIconClickMobile(icon.name as keyof typeof usersData)} // Show popup on click for mobile
+            whileHover={{
+              scale: 1.2,
+              filter: "brightness(1.3)",
+            }}
+            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+          >
+            <Image
+              src={icon.icon}
+              alt={icon.name}
+              width={50}
+              height={50}
+              className="drop-shadow-lg hover:drop-shadow-2xl"
+            />
+          </motion.a>
+        ))}
+      </div>
     </div>
   );
 };
