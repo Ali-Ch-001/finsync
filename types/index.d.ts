@@ -7,6 +7,18 @@ declare type SearchParamProps = {
 
 // ========================================
 
+type User = {
+  name: string;
+  image: string;
+  link: string;
+};
+
+type PopupData = {
+  users: User[];
+  iconName: string;
+};
+
+
 declare type SignUpParams = {
   firstName: string;
   lastName: string;

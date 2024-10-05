@@ -7,18 +7,6 @@ import { socialIcons, usersData } from "@/constants";
 import { useState, useEffect } from "react";
 
 
-type User = {
-  name: string;
-  image: string;
-  link: string;
-};
-
-type PopupData = {
-  users: User[];
-  iconName: string;
-};
-
-
 const AllTabs = () => {
   const tabs = [
     {
