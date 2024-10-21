@@ -20,9 +20,14 @@ export const sidebarLinks = [
     label: "Transfer Funds",
   },
   {
-    imgURL: "icons/spin-wheel.svg",
+    imgURL: "/icons/spin-wheel.svg",
     route: "/spin-wheel",
     label: "Spin Wheel",
+  },
+  {
+    imgURL: "/icons/loan-form.png",
+    route: "/loan-form",
+    label: "Loan Form",
   },
 ];
 

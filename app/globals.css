@@ -385,7 +385,7 @@
 
  /* spin */
  .spin-wheel-page {
-  @apply flex flex-col min-h-screen bg-gray-100;
+  @apply flex flex-col min-h-screen bg-gray-100 overflow-y-scroll;
 }
 
 .spin-wheel-page header {
@@ -399,4 +399,27 @@
 .spin-wheel {
   @apply size-full pt-5 flex flex-col items-center justify-center h-screen bg-gray-50
 }
+/* loan form */
 
+
+.background-loan
+{
+  @apply bg-gray-100
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+.special-inputbar
+{
+ @apply mt-2 w-2/3
+}
+.structure-information{
+  @apply col-span-2 pl-7 mt-4
+}
+.info-text{
+  @apply font-bold text-xl text-blue-800
+}
