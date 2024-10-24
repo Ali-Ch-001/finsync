@@ -10,17 +10,14 @@ import OtherLoan from "@/components/OtherLoan";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authFormSchema } from "@/lib/utils";
-import { Form } from "@/components/ui/form";  
+import { loanFormSchema } from "@/lib/utils";
 import { Input } from "@/components/ui/input"; 
 import { Label } from "@/components/ui/label"; 
 import { Button } from "@/components/ui/button";
 
-const formSchema = authFormSchema('loan-form');
-
 const LoanForm: React.FC = () => {
-  const methods = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const methods = useForm<z.infer<typeof loanFormSchema>>({
+    resolver: zodResolver(loanFormSchema),
   });
 
   const { handleSubmit } = methods;
@@ -28,7 +25,7 @@ const LoanForm: React.FC = () => {
   // State to track selected loan purpose
   const [loanPurpose, setLoanPurpose] = useState<string | null>(null);
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof loanFormSchema>) => {
     console.log(data);
   };
 
@@ -43,12 +40,11 @@ const LoanForm: React.FC = () => {
 
       <FormProvider {...methods}>
         {/* Use Form component */}
-        <Form onSubmit={handleSubmit(onSubmit)} className="p-8 grid grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
           
-        
-          <div className="flex justify-between gap-8 w-full pt-4 pl-7 pr-2">
+          <div className="flex flex-col md:flex-row justify-between gap-8 w-full pt-4 pr-2">
             {/* Desired Loan Amount */}
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <Label htmlFor="loanAmount" className="text-lg">Desired Loan Amount $</Label>
               <Input 
                 id="loanAmount" 
@@ -59,7 +55,7 @@ const LoanForm: React.FC = () => {
             </div>
 
             {/* Annual Income */}
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <Label htmlFor="annualIncome" className="text-lg">Annual Income $</Label>
               <Input 
                 id="annualIncome" 
@@ -70,11 +66,10 @@ const LoanForm: React.FC = () => {
             </div>
           </div>
 
-
           {/* Loan Purpose */}
-          <div className="pt-2 col-span-2 pl-7">
+          <div className="pt-2 col-span-1 md:col-span-2">
             <Label className="font-bold text-xl">Loan will be used for:</Label>
-            <div className="pt-2 flex gap-4 text-lg">
+            <div className="pt-2 flex flex-wrap gap-4 text-lg">
 
               <label>
                 <Input 
@@ -119,33 +114,31 @@ const LoanForm: React.FC = () => {
             </div>
           </div>
 
-{/* Conditionally render additional inputs based on loan purpose */}
-
-{loanPurpose === "Business" && <BusinessLoan methods={methods} />}
-{loanPurpose === "Home Improvement" && <HomeLoan methods={methods} />}
-{loanPurpose === "Education" && <EducationLoan methods={methods} />}
-{loanPurpose === "Investment" && <InvestmentLoan methods={methods} />}
-{loanPurpose === "Other" && <OtherLoan methods={methods} />}
-
+          {/* Conditionally render additional inputs based on loan purpose */}
+          {loanPurpose === "Business" && <BusinessLoan methods={methods} />}
+          {loanPurpose === "Home Improvement" && <HomeLoan methods={methods} />}
+          {loanPurpose === "Education" && <EducationLoan methods={methods} />}
+          {loanPurpose === "Investment" && <InvestmentLoan methods={methods} />}
+          {loanPurpose === "Other" && <OtherLoan methods={methods} />}
 
           {/* Contact Information */}
-          <div className="col-span-2 mt-4 pl-7">
+          <div className="col-span-1 md:col-span-2 mt-4">
             <h3 className="info-text">Contact Information</h3>
           </div>
 
           {/* Phone */}
-          <div className="w-full pl-7">
+          <div className="w-full">
             <Label htmlFor="phone">Phone</Label>
             <Input 
               id="phone" 
               {...methods.register("phone")} 
               placeholder="Enter your phone number" 
-              className="mt-2 w-2/5"  
+              className="mt-2 w-full md:w-2/5"  
             />
           </div>
 
           {/* Marital Status */}
-          <div className="pt-2 col-span-2 pl-7">
+          <div className="pt-2 col-span-1 md:col-span-2">
             <Label className="info-text">Marital Status</Label>
             <div className="pt-2 flex gap-4">
               <label>
@@ -161,12 +154,12 @@ const LoanForm: React.FC = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="col-span-2 text-center mt-4 ">
-            <Button type="submit" className="py-3 px-6 bg-green-600 text-white rounded-lg">
+          <div className="col-span-1 md:col-span-2 text-center mt-4 ">
+            <Button type="submit" className="py-3 px-6 bg-blue-600 text-white rounded-lg">
               Submit Loan Application
             </Button>
           </div>
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );
