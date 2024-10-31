@@ -83,7 +83,7 @@ const PaymentTransferForm = ({ accounts }: PaymentTransferFormProps) => {
 
         if (newTransaction) {
           form.reset();
-          router.push("/");
+          router.push("/home");
         }
       }
     } catch (error) {
