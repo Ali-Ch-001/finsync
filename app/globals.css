@@ -397,7 +397,7 @@
 }
 
 .spin-wheel {
-  @apply size-full pt-5 flex flex-col items-center justify-center h-screen bg-gray-50
+  @apply size-full pt-5 flex flex-col items-center justify-center h-screen bg-gray-100
 }
 
 
