@@ -397,14 +397,15 @@
 }
 
 .spin-wheel {
-  @apply size-full pt-5 flex flex-col items-center justify-center h-screen bg-gray-50
+  @apply size-full pt-5 flex flex-col items-center justify-center h-screen bg-gray-100
 }
+
+
+
 /* loan form */
 
-
-.background-loan
-{
-  @apply bg-gray-100
+.background-loan {
+  @apply bg-gray-100;
 }
 
 label {
@@ -413,13 +414,31 @@ label {
   gap: 8px; 
 }
 
-.special-inputbar
-{
- @apply mt-2 w-2/3
+.input-full {
+  @apply mt-2 w-full;
 }
-.structure-information{
-  @apply col-span-2 pl-7 mt-4
+
+.special-inputbar {
+  @apply mt-2 w-full md:w-2/3;
 }
-.info-text{
-  @apply font-bold text-xl text-blue-800
+
+.structure-information {
+  @apply col-span-1 md:col-span-2 px-4 md:pl-7 mt-4;
+}
+
+.info-text {
+  @apply font-bold text-xl text-blue-800;
+}
+
+/* Additional Mobile Styles */
+@media (max-width: 768px) {
+  .grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+  .header-box-title {
+    font-size: 1.5rem;
+  }
+  .header-box-subtext {
+    font-size: 1rem;
+  }
 }
