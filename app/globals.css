@@ -442,3 +442,33 @@ label {
     font-size: 1rem;
   }
 }
+
+
+/*ChatBot*/
+.fixed-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 50;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 90%;
+  max-width: 400px;
+}
