@@ -1,10 +1,9 @@
-// lib/geminiProxy.ts
+
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const generateContent = async (prompt: string): Promise<string> => {
-  const apiKey = "AIzaSyDDF0giYdWHQgMi872JMIPQ6zCYhhKw21M";
-  
-  const genAI = new GoogleGenerativeAI(apiKey);
+
+  const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY as string);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   try {

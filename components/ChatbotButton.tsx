@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { generateContent } from "@/lib/geminiProxy"; // Import the proxy function
+import { generateContent } from "@/lib/geminiProxy";
 
 const ChatbotButton: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,6 @@ const ChatbotButton: React.FC = () => {
 
   return (
     <>
-      {/* Chatbot button with SVG icon */}
       <button
         onClick={toggleChatbot}
         className="fixed bottom-4 right-4 bg-blue-600 p-3 rounded-full shadow-lg z-50"
@@ -63,7 +62,6 @@ const ChatbotButton: React.FC = () => {
         <Image src="/icons/chatbot.svg" alt="Chatbot Icon" width={24} height={24} />
       </button>
 
-      {/* Chatbot popup window */}
       {isOpen && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -76,7 +74,6 @@ const ChatbotButton: React.FC = () => {
             <button onClick={toggleChatbot} className="text-gray-500 hover:text-gray-700">×</button>
           </div>
 
-          {/* FAQ Section */}
           <div className="p-4 border-b overflow-y-auto">
             <h3 className="text-sm font-semibold mb-2">Ask a question or select from common FAQs:</h3>
             {faqData.map((faq, index) => (
@@ -90,7 +87,6 @@ const ChatbotButton: React.FC = () => {
             ))}
           </div>
 
-          {/* Chat history */}
           <div className="flex-1 p-4 overflow-y-auto">
             {chatHistory.map((message, index) => (
               <div
@@ -102,10 +98,8 @@ const ChatbotButton: React.FC = () => {
             ))}
           </div>
 
-          {/* Error message */}
           {error && <div className="p-2 text-red-600 text-sm">{error}</div>}
 
-          {/* Input box for user to type */}
           <div className="p-4 border-t flex items-center space-x-2">
             <input
               type="text"
@@ -119,7 +113,6 @@ const ChatbotButton: React.FC = () => {
             </button>
           </div>
 
-          {/* Clear chat button */}
           <button
             onClick={handleClearChat}
             className="text-blue-500 text-sm text-center py-2 hover:underline"
