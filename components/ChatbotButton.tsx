@@ -57,7 +57,7 @@ const ChatbotButton: React.FC = () => {
     <>
       <button
         onClick={toggleChatbot}
-        className="fixed bottom-4 right-4 bg-blue-600 p-3 rounded-full shadow-lg z-50"
+        className="fixed bottom-4 right-4 bg-slate-100 p-3 rounded-full shadow-lg z-50"
       >
         <Image src="/icons/chatbot.svg" alt="Chatbot Icon" width={24} height={24} />
       </button>
