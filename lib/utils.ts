@@ -212,12 +212,11 @@ export const authFormSchema = (type: string) => z.object({
 })
 
 export const loanFormSchema = z.object({
-  loanAmount: z.string().nonempty("Loan amount is required"),
-  annualIncome: z.string().nonempty("Annual income is required"),
+  loanAmount: z.string().min(1, "Loan amount is required"),
+  annualIncome: z.string().min(1,"Annual income is required"),
   loanPurpose: z.enum(["Business", "Home Improvement", "Education", "Investment", "Other"]),
-  phone: z.string().nonempty("Phone number is required"),
+  phone: z.string().min(1,"Phone number is required"),
   maritalStatus: z.enum(["Single", "Married", "Other"]),
-  // Add additional fields for each loan purpose if needed
   businessDetails: z.string().optional(),
   homeDetails: z.string().optional(),
   educationDetails: z.string().optional(),

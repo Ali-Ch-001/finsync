@@ -6,6 +6,11 @@ import { motion } from "framer-motion";
 import { socialIcons, usersData } from "@/constants";
 import { useState, useEffect } from "react";
 
+type PopupData = {
+  users: { image: string; name: string; link: string }[];
+  iconName: string;
+};
+
 
 const AllTabs = () => {
   const tabs = [
