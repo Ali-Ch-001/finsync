@@ -33,16 +33,19 @@ const LoanInformation: React.FC<LoanInformationProps> = ({ methods }) => (
       />
     </div>
 
-    {/* Interest Rate Type */}
-    <div className="mt-4">
-      <Label htmlFor="interestRateType" className="text-lg">Interest Rate Type</Label>
-      <Input
-        id="interestRateType"
-        {...methods.register('interestRateType')}
-        placeholder="Ex: Fixed-rate mortgage"
-        className="special-inputbar"
-      />
-    </div>
+{/* Interest Rate Type */}
+<div className="mt-4">
+  <Label htmlFor="interestRateType" className="text-lg">Interest Rate Type</Label>
+  <select
+    id="interestRateType"
+    {...methods.register('interestRateType')}
+    className="special-inputbar"
+  >
+    <option value="fixed">Fixed</option>
+    <option value="variable">Variable</option>
+  </select>
+</div>
+
 
     {/* Repayment Plan */}
     <div className="mt-4">

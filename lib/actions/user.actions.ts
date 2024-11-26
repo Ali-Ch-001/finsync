@@ -14,6 +14,7 @@ const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
   APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID,
+  APPWRITE_LOAN_COLLECTION_ID: LOAN_COLLECTION_ID,
 } = process.env;
 
 export const getUserInfo = async ({ userId }: getUserInfoProps) => {
@@ -110,15 +111,19 @@ export async function getLoggedInUser() {
     const { account } = await createSessionClient();
     const result = await account.get();
 
-    const user = await getUserInfo({ userId: result.$id})
-  
+    const user = await getUserInfo({ userId: result.$id });
 
-    return parseStringify(user);
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    return user;
   } catch (error) {
-    console.log(error)
-    return null;
+    console.error("Error fetching logged-in user:", error);
+    throw new Error("Failed to fetch user ID. Please ensure you are logged in.");
   }
 }
+
 
 export const logoutAccount = async () => {
   try {
@@ -295,3 +300,21 @@ export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps)
     console.log(error)
   }
 }
+
+export const addLoanApplication = async (loanData: Record<string, string | null>) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const response = await database.createDocument(
+      DATABASE_ID!,
+      LOAN_COLLECTION_ID!,
+      ID.unique(),
+      loanData
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error adding loan application:", error);
+    return null;
+  }
+};
