@@ -213,13 +213,59 @@ export const authFormSchema = (type: string) => z.object({
 
 export const loanFormSchema = z.object({
   loanAmount: z.string().min(1, "Loan amount is required"),
-  annualIncome: z.string().min(1,"Annual income is required"),
+  annualIncome: z.string().min(1, "Annual income is required"),
   loanPurpose: z.enum(["Business", "Home Improvement", "Education", "Investment", "Other"]),
-  phone: z.string().min(1,"Phone number is required"),
+  phone: z.string().min(1, "Phone number is required"),
   maritalStatus: z.enum(["Single", "Married", "Other"]),
-  businessDetails: z.string().optional(),
-  homeDetails: z.string().optional(),
-  educationDetails: z.string().optional(),
-  investmentDetails: z.string().optional(),
-  otherDetails: z.string().optional(),
+  employmentStatus: z.string().optional(),
+  jobTitle: z.string().optional(),
+  yearsOfEmployment: z.string().optional(),
+  monthlyGrossIncome: z.string().optional(),
+  otherIncome: z.string().optional(),
+  loanTerm: z.string().optional(),
+  downPayment: z.string().optional(),
+  interestRateType: z.enum(["fixed", "variable"]),
+  repaymentPlan: z.string().optional(),
+  currentAssets: z.string().optional(),
+  currentLiabilities: z.string().optional(),
+  existingDebts: z.string().optional(),
+  purposeOfTheLoan: z.string().optional(),
+  businessDetails: z
+    .object({
+      businessName: z.string().optional(),
+      industry: z.string().optional(),
+      businessAddress: z.string().optional(),
+      yearsInOperation: z.string().optional(),
+      numberOfEmployees: z.string().optional(),
+      businessStructure: z.string().optional(),
+    })
+    .optional(),
+  homeDetails: z
+    .object({
+      propertyType: z.string().optional(),
+      purchasePrice: z.string().optional(),
+      appraisedValue: z.string().optional(),
+      existingMortgageDetails: z.string().optional(),
+      realEstateAgentInfo: z.string().optional(),
+    })
+    .optional(),
+  educationDetails: z
+    .object({
+      institutionName: z.string().optional(),
+      courseOfStudy: z.string().optional(),
+      durationOfCourse: z.string().optional(),
+      startDate: z.string().optional(),
+      expectedGraduationDate: z.string().optional(),
+    })
+    .optional(),
+  investmentDetails: z
+    .object({
+      investmentType: z.string().optional(),
+      investmentPurpose: z.string().optional(),
+      investmentLocation: z.string().optional(),
+      propertyValue: z.string().optional(),
+      ownership: z.string().optional(),
+      realEstateHoldings: z.string().optional(),
+    })
+    .optional(),
 });
