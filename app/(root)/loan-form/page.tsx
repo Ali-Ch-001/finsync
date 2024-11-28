@@ -14,7 +14,7 @@ import { loanFormSchema } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { getLoggedInUser, addLoanApplication } from "@/lib/actions/user.actions"; // Importing functions from user.actions.ts
+import {  addLoanApplication } from "@/lib/actions/user.actions";
 
 const LoanForm: React.FC = () => {
   const methods = useForm<z.infer<typeof loanFormSchema>>({
@@ -42,13 +42,6 @@ const LoanForm: React.FC = () => {
       if (!data.jobTitle) throw new Error("Job Title is required.");
       if (!data.phone) throw new Error("Phone number is required.");
       if (!data.maritalStatus) throw new Error("Marital Status is required.");
-  
-      // Fetch the logged-in user's information
-      const user = await getLoggedInUser();
-  
-      if (!user || !user.userId) {
-        throw new Error("Failed to fetch user ID. Please ensure you are logged in.");
-      }
   
       // Prepare loan data
       const loanData: Record<string, string | null> = {
@@ -92,11 +85,7 @@ const LoanForm: React.FC = () => {
         "Property-Value-Appraisal": data.investmentDetails?.propertyValue || null,
         Current_Real_Estate_Ownership: data.investmentDetails?.ownership || null,
         Current_Real_Estate_Holdings: data.investmentDetails?.realEstateHoldings || null,
-        userId: user.userId, // Include the fetched user ID here
       };
-       // Log the userId to console and alert
-       console.log("User ID being sent to the database:", user.userId);
-       alert(`User ID being sent to the database: ${user.userId}`);
    
        // Call the action to submit loan data
        const response = await addLoanApplication(loanData);

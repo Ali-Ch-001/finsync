@@ -113,16 +113,32 @@ export async function getLoggedInUser() {
 
     const user = await getUserInfo({ userId: result.$id });
 
-    if (!user) {
-      throw new Error("User not found.");
-    }
 
     return user;
   } catch (error) {
-    console.error("Error fetching logged-in user:", error);
-    throw new Error("Failed to fetch user ID. Please ensure you are logged in.");
+    console.error("No Sessions", error);
   }
 }
+
+export const getUserDocumentId = async (userId: string) => {
+  try {
+    const { database } = await createAdminClient();
+    const userDocument = await database.listDocuments(
+      DATABASE_ID!,
+      USER_COLLECTION_ID!,
+      [Query.equal('userId', [userId])]
+    );
+
+    if (userDocument.total === 1) {
+      return userDocument.documents[0].$id;
+    } else {
+      throw new Error('User document not found');
+    }
+  } catch (error) {
+    console.error('Error retrieving user document ID:', error);
+    return null;
+  }
+};
 
 
 export const logoutAccount = async () => {
@@ -303,8 +319,11 @@ export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps)
 
 export const addLoanApplication = async (loanData: Record<string, string | null>) => {
   try {
+    const user = await getLoggedInUser();
+    loanData.userId = await getUserDocumentId(user.userId);
     const { database } = await createAdminClient();
 
+    
     const response = await database.createDocument(
       DATABASE_ID!,
       LOAN_COLLECTION_ID!,
