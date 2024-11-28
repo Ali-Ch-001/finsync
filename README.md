@@ -46,9 +46,39 @@ Check out the live application here: [Finsync](https://finsync-delta.vercel.app/
 ### 📱 Responsiveness
 - **Seamless Experience**: Adapts to various screen sizes and devices, providing a consistent user experience across desktop, tablet, and mobile platforms.
 
-## 🚀 Coming Soon
-New Exicting Features coming soon.. Stay Tuned
+### 💸 Loans
+- Apply For Loans Semelessly and get quotes from from multiple Banks
 
-## 📦 Code Architecture & Reusability
-- **Modular Structure**: Built with reusable components to enhance maintainability and scalability.
-- **Clean Code Practices**: Follow best practices for code organization and documentation to ensure ease of understanding and collaboration.
+### 💬 ChatBot
+- Having Issues? No Worries Your Personal AI Assistant is here to guide you
+  
+### 🎁 Rewards
+- Get Daily Rewards on top being Fiancially Resposible.
+  
+### 🚀 Coming Soon
+- New Exicting Features coming soon.. Stay Tuned
+
+## 📦 Code
+- **Modular Structure**: Organized into independent, reusable components for enhanced flexibility and scalability across the application.  
+- **Component Reusability**: Common UI elements, forms, and utilities are abstracted into reusable components, reducing duplication and improving maintainability.  
+- **Separation of Concerns**: Each module focuses on a single responsibility, promoting clear boundaries between business logic, UI, and data handling.  
+- **Scalable Design**: The architecture supports easy integration of new features without affecting existing functionality, ensuring future growth.  
+- **Consistent Code Formatting**: Enforces uniform code style using linters and formatters to maintain readability and consistency across the codebase.  
+- **Type Safety**: Utilizes TypeScript to enforce strict type-checking, reducing runtime errors and ensuring more predictable behavior.  
+- **Documentation Standards**: Comprehensive inline comments and well-structured external documentation ensure ease of understanding and knowledge transfer.  
+- **Error Handling**: Implements robust error handling mechanisms to manage exceptions gracefully, ensuring smooth user experience and maintainable code.  
+- **Version Control Practices**: Follows a structured Git workflow with meaningful commit messages, ensuring smooth collaboration and code history tracking.  
+- **Testing Frameworks**: Incorporates unit and integration testing to ensure the reliability of individual components and the system as a whole.
+
+## 🏗️ Client-Server Architecture Overview
+
+- **Client-Side (Next.js):** Handles UI/UX, API communication, state management, and form validation using React Hook Form and Zod.  
+- **Server-Side (Next.js API Routes):** Manages Plaid and Dwolla API interactions, data validation, business logic, and authentication.  
+- **Plaid Integration:** Allows users to link bank accounts, securely exchanging tokens and fetching financial data.  
+- **Dwolla Integration:** Handles ACH transfers, customer creation, and transaction status updates securely.  
+- **Appwrite (Backend):** Provides authentication, database storage, file management, and real-time event handling.  
+- **Authentication & Authorization:** Secured via Appwrite’s authentication system using JWT tokens and session management.  
+- **Data Management:** Stores user profiles, transactions, and financial insights in Appwrite’s secure database.  
+- **Serverless Functions:** Executes custom backend logic such as notifications or data processing in real-time.  
+- **Communication Workflow:** Integrates Appwrite, Plaid, and Dwolla for seamless account linking, fund transfers, and real-time updates.  
+- **Scalable & Secure:** Modular, scalable architecture ensures performance, data integrity, and secure transactions.
