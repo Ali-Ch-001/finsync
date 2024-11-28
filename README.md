@@ -82,3 +82,16 @@ Check out the live application here: [Finsync](https://finsync-delta.vercel.app/
 - **Serverless Functions:** Executes custom backend logic such as notifications or data processing in real-time.  
 - **Communication Workflow:** Integrates Appwrite, Plaid, and Dwolla for seamless account linking, fund transfers, and real-time updates.  
 - **Scalable & Secure:** Modular, scalable architecture ensures performance, data integrity, and secure transactions.
+
+## 🛜 CI/CD Pipeline with Vercel
+
+- **Continuous Integration (CI):** Every push to the GitHub repository triggers automatic builds on Vercel to ensure that the code compiles correctly and passes all defined tests.  
+- **Automated Builds:** Vercel detects changes in the main branch (or other branches) and automatically builds the Next.js application with the latest updates.  
+- **Preview Deployments:** For each pull request, Vercel creates a unique preview URL, allowing developers to test changes in a production-like environment before merging.  
+- **Continuous Deployment (CD):** Once changes are merged into the main branch, Vercel automatically deploys the latest version of the application to production.  
+- **Environment Variables Management:** Securely manages environment variables (e.g., API keys for Appwrite, Plaid, Dwolla) through Vercel’s dashboard for seamless deployment. 
+- **Atomic Deployments:** Ensures zero-downtime deployments by replacing the entire application in production only after the new version is fully built and validated.  
+- **Rollback Mechanism:** Provides an easy rollback option to quickly revert to previous deployments in case of issues with the latest release.  
+- **Custom Domains & SSL:** Automatically manages custom domain configurations and ensures HTTPS with SSL certificates for secure deployments.  
+- **Performance Monitoring:** Offers real-time analytics on build duration, deployment status, and application performance for continuous optimization.  
+- **Git Integration:** Direct integration with GitHub ensures smooth collaboration, with every commit triggering the pipeline automatically.
