@@ -95,3 +95,6 @@ Check out the live application here: [Finsync](https://finsync-delta.vercel.app/
 - **Custom Domains & SSL:** Automatically manages custom domain configurations and ensures HTTPS with SSL certificates for secure deployments.  
 - **Performance Monitoring:** Offers real-time analytics on build duration, deployment status, and application performance for continuous optimization.  
 - **Git Integration:** Direct integration with GitHub ensures smooth collaboration, with every commit triggering the pipeline automatically.
+
+## SLIDES Link
+  https://www.canva.com/design/DAGX1FVFsHc/eEjU58_Yjgrur4TtNNc7LQ/edit?utm_content=DAGX1FVFsHc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
